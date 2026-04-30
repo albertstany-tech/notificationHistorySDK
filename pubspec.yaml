@@ -1,6 +1,6 @@
 name: notification_history
 description: "A Flutter package providing a local database and UI to seamlessly manage, store, and display push notification history (including FCM) in your apps."
-version: 1.0.5
+version: 1.0.4
 homepage: https://github.com/albertstany-tech/notificationHistorySDK
 repository: https://github.com/albertstany-tech/notificationHistorySDK
 issue_tracker: https://github.com/albertstany-tech/notificationHistorySDK/issues
