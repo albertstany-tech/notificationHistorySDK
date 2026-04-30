@@ -6,13 +6,24 @@ import '../use_cases/mark_notification_as_read.dart';
 import '../use_cases/delete_notification.dart';
 import '../use_cases/mark_all_notifications_as_read.dart';
 
+/// A Flutter [StatefulWidget] that displays the notification history.
 class NotificationHistoryScreen extends StatefulWidget {
+  /// The use case to fetch notifications.
   final GetNotifications getNotifications;
+
+  /// The use case to mark a specific notification as read.
   final MarkNotificationAsRead markNotificationAsRead;
+
+  /// The use case to delete a specific notification.
   final DeleteNotification deleteNotification;
+
+  /// The use case to mark all notifications as read.
   final MarkAllNotificationsAsRead markAllNotificationsAsRead;
+
+  /// Whether to display only unread notifications (defaults to false).
   final bool showUnreadOnly;
 
+  /// Creates a [NotificationHistoryScreen] widget.
   const NotificationHistoryScreen({
     Key? key,
     required this.getNotifications,

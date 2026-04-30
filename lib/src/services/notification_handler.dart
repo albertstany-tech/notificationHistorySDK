@@ -4,6 +4,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import '../entities/notification_item.dart';
 import '../use_cases/add_notification.dart';
 
+/// A service class to handle Firebase Cloud Messaging and local notifications.
 class NotificationHandler {
   static final NotificationHandler _instance = NotificationHandler._();
   final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin =
@@ -13,15 +14,19 @@ class NotificationHandler {
 
   NotificationHandler._();
 
+  /// Creates a [NotificationHandler] and injects the required [addNotification] use case.
   factory NotificationHandler({required AddNotification addNotification}) {
     _instance._addNotification = addNotification;
     return _instance;
   }
 
+  /// Gets the injected [AddNotification] use case.
   AddNotification get addNotification => _addNotification!;
 
+  /// Returns the singleton instance of [NotificationHandler].
   static NotificationHandler get instance => _instance;
 
+  /// Initializes Firebase, requests permissions, and configures message handlers.
   Future<void> initialize() async {
     // Initialize Firebase
     await Firebase.initializeApp();
@@ -37,7 +42,7 @@ class NotificationHandler {
       android: initializationSettingsAndroid,
     );
     await _flutterLocalNotificationsPlugin.initialize(
-      initializationSettings,
+      settings: initializationSettings,
       onDidReceiveNotificationResponse: (response) async {
         if (response.payload != null) {
           await _storeNotification(
@@ -94,6 +99,7 @@ class NotificationHandler {
     await addNotification.execute(notification);
   }
 
+  /// Displays a local notification and stores it in the local database.
   Future<void> showNotification(
     String title,
     String body, {
@@ -107,10 +113,10 @@ class NotificationHandler {
     );
     const notificationDetails = NotificationDetails(android: androidDetails);
     await _flutterLocalNotificationsPlugin.show(
-      DateTime.now().millisecondsSinceEpoch % 1000000,
-      title,
-      body,
-      notificationDetails,
+      id: DateTime.now().millisecondsSinceEpoch % 1000000,
+      title: title,
+      body: body,
+      notificationDetails: notificationDetails,
       payload: payload,
     );
     await _storeNotification(title: title, body: body, payload: payload);

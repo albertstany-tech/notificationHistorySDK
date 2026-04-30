@@ -4,7 +4,10 @@ import 'package:path/path.dart';
 import '../../entities/notification_item.dart';
 import '../notification_repository.dart';
 
+/// A concrete implementation of [NotificationRepository] that uses SQLite 
+/// (via the sqflite package) to store notification history locally.
 class SqfliteNotificationRepository implements NotificationRepository {
+  /// The singleton instance of [SqfliteNotificationRepository].
   static final SqfliteNotificationRepository instance =
       SqfliteNotificationRepository._init();
   static Database? _database;
@@ -12,6 +15,7 @@ class SqfliteNotificationRepository implements NotificationRepository {
 
   SqfliteNotificationRepository._init();
 
+  /// Gets the active database instance, initializing it if necessary.
   Future<Database> get database async {
     if (_database != null) return _database!;
     _database = await _initDB('notifications.db');
@@ -132,6 +136,7 @@ class SqfliteNotificationRepository implements NotificationRepository {
     }
   }
 
+  /// Closes the underlying database connection.
   Future<void> close() async {
     try {
       final db = await database;
