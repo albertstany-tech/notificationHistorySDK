@@ -1,4 +1,5 @@
 /// A Flutter package to manage and display push notification history using SQLite.
+library;
 
 export 'src/entities/notification_item.dart';
 export 'src/repositories/notification_repository.dart';
